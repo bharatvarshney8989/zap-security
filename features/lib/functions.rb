@@ -1,8 +1,12 @@
 #encoding: UTF-8
 
+#Launch Owasp ZAP 
 def launch_owasp_zap
-  $zap_path = '/Users/amermer/Desktop/ZAP_2.4.3'
+  #Set ZAP Path
+  $zap_path = 'C:\ZAP\ZAP_2.4.3'
+  #Go to ZAP Path
   Dir.chdir($zap_path){
+	#Determine Operating System, kill JAVA instances and Start ZAP in deamon mode.
     if determine_os == 'windows'
       system("taskkill /im java.exe /f")
       system("taskkill /im javaw.exe /f")
@@ -17,6 +21,7 @@ def launch_owasp_zap
   sleep 20
 end
 
+#Operating System Determination Method
 def determine_os
   if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
     return 'windows'
