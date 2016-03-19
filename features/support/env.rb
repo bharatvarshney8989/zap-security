@@ -6,9 +6,12 @@ require 'rest-client'
 require 'capybara'
 require 'capybara/dsl'
 
+#Define global variables localhost and its port
 $zap_proxy = "localhost"
 $zap_proxy_port = 8095
 
+#Below lines are our driver profile settings to reach internet through a proxy 
+#You can set security=true as environment variable or declare it on command window
 if ENV['security'] == "true"
   Capybara.register_driver :selenium do |app|
     profile = Selenium::WebDriver::Firefox::Profile.new
@@ -19,17 +22,19 @@ if ENV['security'] == "true"
   end
 end
 
+#Screenshot operations
 $screenshot_counter = 0
 Capybara.save_and_open_page_path = File.expand_path(File.join(File.dirname(__FILE__), "../screenshots/"))
 
+#Capybara settings
 Capybara.run_server = false
-Capybara.default_driver = :selenium
-Capybara.javascript_driver = :selenium
-Capybara.default_selector = :css
-Capybara.default_max_wait_time = 15
-Capybara.ignore_hidden_elements = false 
-Capybara.exact = true
-Capybara.app_host = 'http://www.akakce.com'
+Capybara.default_driver = :selenium #Use Selenium as Driver
+Capybara.javascript_driver = :selenium #Use Selenium as JS Driver
+Capybara.default_selector = :css #Defatult Selector methos is CSS
+Capybara.default_max_wait_time = 15 #Wait time is 15 seconds
+Capybara.ignore_hidden_elements = false #Do not ignore hidden elements
+Capybara.exact = true #All is expressions match exactly (Exact Match/Ignores substring matches)
+Capybara.app_host = 'http://www.akakce.com' #Our test site
 World(Capybara::DSL)
 
 ENV['NO_PROXY'] = ENV['no_proxy'] = '127.0.0.1'
